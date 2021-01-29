@@ -1,0 +1,11 @@
+**/Debug
+**/Release
+**/Debug/*
+**/Release/*
+**/.xdchelp
+**/.config
+**/.config/*
+**/.launches
+**/.launches/*
+**/targetConfigs
+**/targetConfigs/*
