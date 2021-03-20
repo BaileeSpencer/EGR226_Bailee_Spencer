@@ -9,11 +9,11 @@
  *************************************************************/
 void pinint(){
 
-    P2->SEL0 &= ~BIT3;
-    P2->SEL1 &= ~BIT3;  //clear select registers, selecting gpio
-    P2->DIR |= BIT3;  //configuring pin as outputs
+    P2->SEL0 &= ~BIT4;
+    P2->SEL1 &= ~BIT4;  //clear select registers, selecting gpio
+    P2->DIR |= BIT4;  //configuring pin as outputs
     //P2->REN   ren is only for inputs
-    P2->OUT &= ~BIT3;
+    P2->OUT &= ~BIT4;
 }
 /****| SysTick_Init  | *****************************************
  * Brief: initialization of systic timer
@@ -36,27 +36,20 @@ void SysTick_Init (void) {
  *      n/a
  *************************************************************/
 void Systick_ms_delay (uint16_t delay) {
+    if (delay == 0){
+        return;
+    }
     SysTick -> LOAD = ((delay * 3000) - 1); //delay for 1 msecond per delay value
     SysTick -> VAL = 0; // any write to CVR clears it
     while ( (SysTick -> CTRL & 0x00010000) == 0); // wait for flag to be SET
 }
-/****| Systick_us_delay  | *****************************************
- * Brief: Systick delay function using ms
- * param:
- *      n/a
- * return:
- *      n/a
- *************************************************************/
-void Systick_us_delay (uint16_t microsecond) {
-    SysTick -> LOAD = ((microsecond * 3) - 1); //delay for 1 us per delay value
-    SysTick -> VAL = 0; // any write to CVR clears it
-    while ( (SysTick -> CTRL & 0x00010000) == 0); // wait for flag to be SET
-}
+
 
 void main(void)
 {
 	WDT_A->CTL = WDT_A_CTL_PW | WDT_A_CTL_HOLD;		// stop watchdog timer
 
+	SysTick_Init();
 	pinint();
 	float duty_cycle = 0.5;
 	float Ton = 0.0;
@@ -64,9 +57,9 @@ void main(void)
 	while(1){
 	    Ton = (duty_cycle * 25);
 	    Toff = (25 - Ton);
-	    P2->OUT |= BIT3;
+	    P2->OUT |= BIT4;
 	    Systick_ms_delay (Ton);
-	    P2->OUT &= ~BIT3;
+	    P2->OUT &= ~BIT4;
 	    Systick_ms_delay (Toff);
 	}
 
