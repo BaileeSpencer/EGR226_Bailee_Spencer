@@ -73,7 +73,6 @@ void PORT5_IRQHandler(void) // Port5 ISR
             duty_cycle = duty_cycle + .1;
             TIMER_A0->CCR[1] = (37500 * duty_cycle);
         }
-
     }
     else if ( P5->IFG & BIT1 ){  // If P5.1 had an interrupt (going from high to low)
         if(duty_cycle == 0){
@@ -83,12 +82,10 @@ void PORT5_IRQHandler(void) // Port5 ISR
             duty_cycle = duty_cycle - .1;
             TIMER_A0->CCR[1] = (37500 * duty_cycle);
         }
-
     }
     else if ( P5->IFG & BIT2 ){  // If P5.2 had an interrupt
         duty_cycle = 0;
         TIMER_A0->CCR[1] = (37500 * duty_cycle);
-
     }
     P5->IFG = 0; // Clear all P1 interrupt flags
 }

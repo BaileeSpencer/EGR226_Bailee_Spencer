@@ -78,13 +78,11 @@ void TimerA_init(void) {
     TIMER_A0->CTL = 0x0254; // SMCLK, Up Mode, /2 divider, clear TAR to start
 }
 
-void main(void)
-{
+void main(void) {
     WDT_A->CTL = WDT_A_CTL_PW | WDT_A_CTL_HOLD;     // stop watchdog timer
 
     TimerA_init();
     keypad_init();
-
     int duty_cycle = 0.5;
 
     while (1) {
@@ -95,8 +93,6 @@ void main(void)
                 Print_Keys (pressed);
                 TIMER_A0->CCR[1] = (37500 * duty_cycle * 0.10);
             }
-
             __delay_cycles(30000); // 10ms delay through the loop before reading keypad again
         }
-
 }
