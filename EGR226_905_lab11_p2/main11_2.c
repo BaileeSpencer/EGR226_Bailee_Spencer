@@ -25,7 +25,7 @@ TIMER_A0->CCR[0] = 37500; // 14 Hz
 TIMER_A0->CCR[1] = (37500/2); // 50% duty cycle
 TIMER_A0->CCTL[1] = TIMER_A_CCTLN_OUTMOD_7;
 
-TIMER_A0->CCTL[4] = 0x4114  // capture mode with interrupts
+TIMER_A0->CCTL[4] = 0x4114;  // capture mode with interrupts
 }
 
 /****| pininit | *****************************************
